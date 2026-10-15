@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Event</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 24px;
+            text-align: center;
+            color: #526B52;
+
+            /* College campus background image */
+            background-image:
+                linear-gradient(
+                    rgba(247, 244, 233, 0.35),
+                    rgba(247, 244, 233, 0.35)
+                ),
+                url("https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1920&q=85");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        header {
+            background: rgba(247, 244, 233, 0.94);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            color: #526B52;
+            font-size: 36px;
+            margin: 16px 0 24px;
+        }
+
+        hr {
+            border: 0;
+            height: 2px;
+            background-color: #D8E0D0;
+            margin: 18px 0;
+        }
+
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        nav a {
+            display: inline-block;
+            color: #FFFFFF;
+            background-color: #879B79;
+            text-decoration: none;
+            padding: 12px 16px;
+            border-radius: 10px;
+            transition: 0.2s;
+        }
+
+        nav a:hover {
+            background-color: #526B52;
+            transform: translateY(-2px);
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 25px auto;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid #D8E0D0;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(82, 107, 82, 0.20);
+        }
+
+        .search-box {
+            margin: 25px 0;
+        }
+
+        label {
+            font-size: 17px;
+            color: #526B52;
+        }
+
+        input {
+            padding: 12px;
+            width: 220px;
+            max-width: 70%;
+            border: 2px solid #B7C5A9;
+            border-radius: 8px;
+            background-color: #FFFFFF;
+            color: #354A35;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #879B79;
+            box-shadow: 0 0 5px #D8E0D0;
+        }
+
+        button {
+            background-color: #879B79;
+            color: #FFFFFF;
+            border: none;
+            padding: 12px 20px;
+            margin: 10px 4px;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background-color: #526B52;
+            transform: translateY(-1px);
+        }
+
+        .table-wrap {
+            width: 100%;
+            overflow-x: auto;
+            margin: 24px auto;
+        }
+
+        #eventTable {
+            width: 100%;
+            min-width: 700px;
+            border-collapse: collapse;
+            background-color: #FFFFFF;
+            border: 1px solid #D8E0D0;
+            box-shadow: 0 4px 14px rgba(82, 107, 82, 0.12);
+        }
+
+        #eventTable th {
+            background-color: #879B79;
+            color: #FFFFFF;
+            padding: 15px 12px;
+            border: 1px solid #D8E0D0;
+        }
+
+        #eventTable td {
+            background-color: #FFFFFF;
+            color: #354A35;
+            padding: 14px 12px;
+            border: 1px solid #E4E8DD;
+        }
+
+        #eventTable tr:nth-child(even) td {
+            background-color: #F7F4E9;
+        }
+
+        .home-button {
+            background-color: #E5EBDD;
+            color: #526B52;
+            font-weight: bold;
+        }
+
+        .home-button:hover {
+            background-color: #D8E0D0;
+        }
+
+        footer {
+            margin-top: 25px;
+            padding: 15px;
+            background: rgba(247, 244, 233, 0.94);
+            color: #526B52;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 700px) {
+            body {
+                padding: 12px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            main {
+                padding: 15px;
+            }
+
+            #eventTable {
+                font-size: 13px;
+            }
+
+            #eventTable th,
+            #eventTable td {
+                padding: 8px 5px;
+            }
+
+            nav a {
+                padding: 9px 10px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>SEARCH EVENT</h1>
+
+        <nav aria-label="Main navigation">
+            <a href="index.html">Home</a>
+            <a href="list.html">List Events</a>
+            <a href="listOne.html">Search Event</a>
+            <a href="insert.html">Insert Event</a>
+            <a href="update.html">Update Event</a>
+            <a href="delete.html">Delete Event</a>
+        </nav>
+    </header>
+
+    <main>
+
+        <h2>Search College Event</h2>
+
+        <hr>
+
+        <div class="search-box">
+            <label for="eventId">
+                <strong>Event ID:</strong>
+            </label>
+
+            <input
+                type="text"
+                id="eventId"
+                placeholder="e.g. E101"
+                required
+            >
+
+            <button type="button" onclick="searchEvent()">
+                Search
+            </button>
+        </div>
+
+        <div class="table-wrap">
+            <table id="eventTable">
+
+                <thead>
+                    <tr>
+                        <th>Event ID</th>
+                        <th>Event Name</th>
+                        <th>Event Time</th>
+                        <th>Event Day</th>
+                        <th>Venue</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody id="eventData">
+                    <tr>
+                        <td colspan="6">
+                            Enter an Event ID and click Search
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+
+        <button
+            class="home-button"
+            onclick="location.href='index.html'">
+            Home Page
+        </button>
+
+    </main>
+
+    <footer>
+        College Event Management System
+    </footer>
+
+    <script>
+        function searchEvent() {
+
+            const eventId =
+                document.getElementById("eventId").value.trim();
+
+            const eventData =
+                document.getElementById("eventData");
+
+            if (!eventId) {
+                alert("Please enter Event ID");
+                return;
+            }
+
+            eventData.innerHTML =
+                '<tr><td colspan="6">Searching...</td></tr>';
+
+            fetch("/events/" + encodeURIComponent(eventId))
+
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Event not found");
+                    }
+
+                    return response.json();
+                })
+
+                .then(data => {
+
+                    if (!data || data.length === 0) {
+                        eventData.innerHTML =
+                            '<tr><td colspan="6">Event Not Found</td></tr>';
+
+                        alert("Event Not Found");
+                        return;
+                    }
+
+                    const event = Array.isArray(data)
+                        ? data[0]
+                        : data;
+
+                    eventData.innerHTML = "";
+
+                    const row = document.createElement("tr");
+
+                    [
+                        event.event_id,
+                        event.event_name,
+                        event.event_time,
+                        event.event_day
+                            ? String(event.event_day).slice(0, 10)
+                            : "",
+                        event.venue,
+                        event.description
+                    ].forEach(value => {
+
+                        const cell = document.createElement("td");
+
+                        cell.textContent = value ?? "";
+
+                        row.appendChild(cell);
+                    });
+
+                    eventData.appendChild(row);
+                })
+
+                .catch(error => {
+
+                    console.error("Search event error:", error);
+
+                    eventData.innerHTML =
+                        '<tr><td colspan="6">Event not found or server error.</td></tr>';
+
+                    alert(error.message);
+                });
+        }
+
+        document.getElementById("eventId").addEventListener(
+            "keydown",
+            function(event) {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    searchEvent();
+                }
+            }
+        );
+    </script>
+
+</body>
+</html>

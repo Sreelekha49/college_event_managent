@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Events</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #34483A;
+            padding: 28px 16px;
+
+            /* College campus background image */
+            background-image:
+                linear-gradient(
+                    rgba(247, 244, 233, 0.30),
+                    rgba(247, 244, 233, 0.30)
+                ),
+                url("https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1920&q=85");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 28px;
+            padding: 22px 15px;
+            background: rgba(247, 244, 233, 0.92);
+            border-radius: 15px;
+        }
+
+        h1 {
+            color: #526B52;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: 20px;
+        }
+
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        nav a {
+            display: inline-block;
+            padding: 11px 15px;
+            border-radius: 9px;
+            background: #879B79;
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: 0.2s;
+        }
+
+        nav a:hover {
+            background: #526B52;
+            transform: translateY(-1px);
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid #E6E0CF;
+            border-radius: 17px;
+            box-shadow: 0 8px 24px rgba(82, 107, 82, 0.20);
+        }
+
+        h2 {
+            color: #526B52;
+            margin-bottom: 18px;
+        }
+
+        p.subtitle {
+            color: #6D7568;
+            line-height: 1.5;
+            margin-bottom: 22px;
+        }
+
+        button {
+            border: 0;
+            border-radius: 8px;
+            padding: 12px 18px;
+            background: #879B79;
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: #526B52;
+            transform: translateY(-1px);
+        }
+
+        .secondary {
+            background: #EEE9D9;
+            color: #526B52;
+        }
+
+        .secondary:hover {
+            background: #DFE5D7;
+        }
+
+        .table-wrap {
+            width: 100%;
+            overflow-x: auto;
+            margin: 18px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+        }
+
+        th {
+            background: #879B79;
+            color: #fff;
+            text-align: left;
+        }
+
+        th,
+        td {
+            padding: 12px 14px;
+            border: 1px solid #E6E0CF;
+        }
+
+        tbody tr:nth-child(even) {
+            background: #F7F4E9;
+        }
+
+        tbody tr:hover {
+            background: #E9EEE3;
+        }
+
+        footer {
+            text-align: center;
+            color: #34483A;
+            margin-top: 24px;
+            font-size: 0.9rem;
+            background: rgba(247, 244, 233, 0.92);
+            padding: 14px;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 20px 10px;
+            }
+
+            main {
+                padding: 20px 15px;
+            }
+
+            nav a {
+                font-size: 0.86rem;
+                padding: 9px 10px;
+            }
+
+            th,
+            td {
+                padding: 9px;
+                white-space: nowrap;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>LIST OF COLLEGE EVENTS</h1>
+
+        <nav aria-label="Main navigation">
+            <a href="index.html">Home</a>
+            <a href="list.html">List Events</a>
+            <a href="listOne.html">Find Event</a>
+            <a href="insert.html">Add Event</a>
+            <a href="update.html">Update Event</a>
+            <a href="delete.html">Delete Event</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>College Event Records</h2>
+
+        <p class="subtitle">
+            View all the events organized in the college.
+        </p>
+
+        <button type="button" onclick="loadEvents()">
+            Refresh List
+        </button>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Event ID</th>
+                        <th>Event Name</th>
+                        <th>Event Time</th>
+                        <th>Event Day</th>
+                        <th>Venue</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody id="eventTableBody">
+                    <tr>
+                        <td colspan="6">Loading events...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <button
+            class="secondary"
+            type="button"
+            onclick="location.href='index.html'">
+            Home Page
+        </button>
+    </main>
+
+    <footer>
+        College Event Management System
+    </footer>
+
+    <script>
+        loadEvents();
+
+        function loadEvents() {
+            fetch("/events")
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Unable to load events.");
+                    }
+
+                    return response.json();
+                })
+
+                .then(data => {
+                    const tbody =
+                        document.getElementById("eventTableBody");
+
+                    tbody.innerHTML = "";
+
+                    if (!data.length) {
+                        tbody.innerHTML =
+                            '<tr><td colspan="6">No events found.</td></tr>';
+                        return;
+                    }
+
+                    data.forEach(event => {
+                        const row = document.createElement("tr");
+
+                        [
+                            event.event_id,
+                            event.event_name,
+                            event.event_time,
+                            event.event_day,
+                            event.venue,
+                            event.description
+                        ].forEach(value => {
+                            const cell = document.createElement("td");
+                            cell.textContent = value ?? "";
+                            row.appendChild(cell);
+                        });
+
+                        tbody.appendChild(row);
+                    });
+                })
+
+                .catch(error => {
+                    document.getElementById("eventTableBody").innerHTML =
+                        '<tr><td colspan="6">' +
+                        error.message +
+                        '</td></tr>';
+                });
+        }
+    </script>
+
+</body>
+</html>
